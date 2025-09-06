@@ -5,6 +5,7 @@ export interface UserPreferences {
   darkMode: boolean;
   language: string;
   notifications: boolean;
+  viewMode: 'normal' | 'draggable';
 }
 
 const initialState: UserPreferences = {
@@ -12,6 +13,7 @@ const initialState: UserPreferences = {
   darkMode: false,
   language: 'en',
   notifications: true,
+  viewMode: 'normal',
 };
 
 const preferencesSlice = createSlice({
@@ -41,6 +43,9 @@ const preferencesSlice = createSlice({
     toggleNotifications: (state) => {
       state.notifications = !state.notifications;
     },
+    setViewMode: (state, action: PayloadAction<'normal' | 'draggable'>) => {
+      state.viewMode = action.payload;
+    },
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   removeCategory,
   setLanguage,
   toggleNotifications,
+  setViewMode,
 } = preferencesSlice.actions;
 
 export default preferencesSlice.reducer;

@@ -1,3 +1,5 @@
+import FavoritesSidebar from './FavoritesSidebar';
+
 interface SidebarItem {
   id: number;
   title: string;
@@ -42,11 +44,6 @@ export default function SidebarContent() {
     { id: 3, title: 'Trending Item 3', subtitle: '300 views' },
   ];
 
-  const favoriteItems: SidebarItem[] = [
-    { id: 1, title: 'Favorite Item 1', subtitle: 'Saved 2 days ago' },
-    { id: 2, title: 'Favorite Item 2', subtitle: 'Saved 2 days ago' },
-  ];
-
   return (
     <div className="space-y-6">
       <SidebarSection
@@ -54,11 +51,7 @@ export default function SidebarContent() {
         icon="🔥"
         items={trendingItems}
       />
-      <SidebarSection
-        title="Favorites"
-        icon="❤️"
-        items={favoriteItems}
-      />
+      <FavoritesSidebar />
     </div>
   );
 }

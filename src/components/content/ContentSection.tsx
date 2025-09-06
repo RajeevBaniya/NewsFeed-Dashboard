@@ -5,7 +5,7 @@ interface ContentSectionProps {
   title: string;
   icon: string;
   items: ContentItem[];
-  type: ContentItem['type'];
+  type: ContentItem['type'] | 'all';
   maxItems?: number;
   onItemAction: (url: string) => void;
 }
@@ -18,7 +18,7 @@ export default function ContentSection({
   maxItems = 5,
   onItemAction,
 }: ContentSectionProps) {
-  const filteredItems = items.filter((item) => item.type === type);
+  const filteredItems = type === 'all' ? items : items.filter((item) => item.type === type);
   const displayItems = filteredItems.slice(0, maxItems);
 
   if (displayItems.length === 0) {
@@ -31,8 +31,8 @@ export default function ContentSection({
         {icon} {title} ({filteredItems.length})
       </h3>
       <div className="space-y-4">
-        {displayItems.map((item) => (
-          <ContentCard key={item.id} item={item} onAction={onItemAction} />
+        {displayItems.map((item, index) => (
+          <ContentCard key={`${title}-${item.id}-${index}`} item={item} onAction={onItemAction} />
         ))}
       </div>
     </div>

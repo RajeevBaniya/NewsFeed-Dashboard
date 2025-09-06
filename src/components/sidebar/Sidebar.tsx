@@ -1,18 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import Icon from '../ui/Icon';
 
 interface SidebarProps {
   isOpen: boolean;
   onToggle: () => void;
+  activeSection: string;
+  onSectionChange: (section: string) => void;
 }
 
-export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
+export default function Sidebar({ isOpen, onToggle, activeSection, onSectionChange }: SidebarProps) {
   const menuItems = [
     { id: 'feed', label: 'Personalized Feed', icon: '📰' },
     { id: 'trending', label: 'Trending', icon: '🔥' },
     { id: 'favorites', label: 'Favorites', icon: '❤️' },
-    { id: 'settings', label: 'Settings', icon: '⚙️' },
   ];
 
   return (
@@ -42,9 +44,7 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
               onClick={onToggle}
               className="lg:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <Icon name="close" size="md" />
             </button>
           </div>
           
@@ -52,12 +52,19 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
             {menuItems.map((item) => (
               <button
                 key={item.id}
-                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg 
-                         text-left hover:bg-gray-100 dark:hover:bg-gray-800 
-                         transition-colors duration-200"
+                onClick={() => {
+                  onSectionChange(item.id);
+                  onToggle();
+                }}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg 
+                         text-left transition-colors duration-200 ${
+                  activeSection === item.id
+                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+                }`}
               >
                 <span className="text-lg">{item.icon}</span>
-                <span className="text-gray-700 dark:text-gray-300 font-medium">
+                <span className="font-medium">
                   {item.label}
                 </span>
               </button>

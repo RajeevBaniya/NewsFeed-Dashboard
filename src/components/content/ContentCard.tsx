@@ -1,6 +1,11 @@
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { ContentItem } from '@/store/slices/feedSlice';
 import { CONTENT_ICONS, ACTION_TEXTS } from '@/constants';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { toggleFavorite } from '@/store/slices/favoritesSlice';
+import Icon from '../ui/Icon';
 
 interface ContentCardProps {
   item: ContentItem;
@@ -8,6 +13,16 @@ interface ContentCardProps {
 }
 
 export default function ContentCard({ item, onAction }: ContentCardProps) {
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state) => state.favorites.items);
+  const isFavorite = favorites.some(fav => fav.id === item.id);
+  const [imageError, setImageError] = useState(false);
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch(toggleFavorite(item));
+  };
+
   const getIcon = () => {
     switch (item.type) {
       case 'news':
@@ -54,16 +69,47 @@ export default function ContentCard({ item, onAction }: ContentCardProps) {
   };
 
   return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow duration-200">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      whileHover={{ scale: 1.02 }}
+      className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow duration-200 relative"
+    >
+      <motion.button
+        onClick={handleToggleFavorite}
+        className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <motion.div
+          animate={{ scale: isFavorite ? [1, 1.2, 1] : 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Icon
+            name="heart"
+            size="md"
+            className={`transition-colors ${
+              isFavorite 
+                ? 'text-red-500 fill-current' 
+                : 'text-gray-400 hover:text-red-500'
+            }`}
+            fill={isFavorite ? 'current' : 'none'}
+          />
+        </motion.div>
+      </motion.button>
       <div className="flex space-x-4">
         <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0 overflow-hidden">
-          {item.imageUrl ? (
+          {item.imageUrl && !imageError ? (
             <Image
               src={item.imageUrl}
               alt={item.title}
               width={64}
               height={64}
               className="w-full h-full object-cover"
+              onError={() => setImageError(true)}
+              unoptimized={item.imageUrl.startsWith('http')}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-500">
@@ -91,6 +137,6 @@ export default function ContentCard({ item, onAction }: ContentCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
