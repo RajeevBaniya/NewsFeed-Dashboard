@@ -10,6 +10,15 @@ interface DraggableGridProps {
   section: string;
 }
 
+/**
+ * DraggableGrid component that renders a grid of draggable content cards
+ * Features:
+ * - 4-column responsive grid layout
+ * - Drag and drop reordering
+ * - Smooth animations with Framer Motion
+ * - Visual feedback during drag operations
+ */
+
 export default function DraggableGrid({ items, onReorder, onItemAction, section }: DraggableGridProps) {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
@@ -18,20 +27,16 @@ export default function DraggableGrid({ items, onReorder, onItemAction, section 
   };
 
   const handleDragEnd = (dragIndex: number, dropIndex: number) => {
-    console.log('🎯 DraggableGrid handleDragEnd - dragIndex:', dragIndex, 'dropIndex:', dropIndex);
     if (dragIndex !== dropIndex) {
-      console.log('🎯 Calling onReorder with:', { dragIndex, dropIndex, section });
       onReorder(dragIndex, dropIndex, section, section);
-    } else {
-      console.log('🎯 Same index - no reorder needed');
     }
     setDraggedIndex(null);
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <AnimatePresence>
-        {items.map((item, index) => (
+        {items.filter(item => item && item.id).map((item, index) => (
           <motion.div
             key={`${section}-${item.id}-${index}`}
             layout

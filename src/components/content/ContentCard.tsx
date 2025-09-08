@@ -9,51 +9,50 @@ import Icon from '../ui/Icon';
 
 interface ContentCardProps {
   item: ContentItem;
-  onAction: (url: string) => void;
+  onAction?: (url: string) => void;
+  onOpen?: (item: ContentItem) => void; // open Daily.dev-style modal
 }
 
-export default function ContentCard({ item, onAction }: ContentCardProps) {
+/**
+ * ContentCard component displays individual content items with image, title, description,
+ * and action button. Supports favorites functionality and different content types.
+ */
+export default function ContentCard({ item, onAction, onOpen }: ContentCardProps) {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites.items);
   const isFavorite = favorites.some(fav => fav.id === item.id);
   const [imageError, setImageError] = useState(false);
 
+  // Handle favorite toggle with event propagation prevention
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(toggleFavorite(item));
   };
 
-  const getIcon = () => {
-    switch (item.type) {
-      case 'news':
-        return CONTENT_ICONS.NEWS;
-      case 'movie':
-        return CONTENT_ICONS.MOVIE;
-      case 'music':
-        return CONTENT_ICONS.MUSIC;
-      case 'social':
-        return CONTENT_ICONS.SOCIAL;
-      default:
-        return '📄';
-    }
+  // Get appropriate icon for content type
+  const getContentIcon = () => {
+    const iconMap = {
+      news: CONTENT_ICONS.NEWS,
+      movie: CONTENT_ICONS.MOVIE,
+      music: CONTENT_ICONS.MUSIC,
+      social: CONTENT_ICONS.SOCIAL,
+    };
+    return iconMap[item.type] || '📄';
   };
 
-  const getActionText = () => {
-    switch (item.type) {
-      case 'news':
-        return ACTION_TEXTS.NEWS;
-      case 'movie':
-        return ACTION_TEXTS.MOVIE;
-      case 'music':
-        return ACTION_TEXTS.MUSIC;
-      case 'social':
-        return ACTION_TEXTS.SOCIAL;
-      default:
-        return 'View';
-    }
+  // Get action button text based on content type
+  const getActionButtonText = () => {
+    const actionMap = {
+      news: ACTION_TEXTS.NEWS,
+      movie: ACTION_TEXTS.MOVIE,
+      music: ACTION_TEXTS.MUSIC,
+      social: ACTION_TEXTS.SOCIAL,
+    };
+    return actionMap[item.type] || 'View';
   };
 
-  const getMetadata = () => {
+  // Format metadata string based on content type
+  const formatMetadata = () => {
     switch (item.type) {
       case 'news':
         return `${item.source} • ${item.readTime ? `${item.readTime} min read` : 'Just now'}`;
@@ -73,12 +72,12 @@ export default function ContentCard({ item, onAction }: ContentCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      whileHover={{ scale: 1.02 }}
-      className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow duration-200 relative"
+      className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden relative cursor-pointer h-80 flex flex-col shadow-sm hover:shadow-md transition-shadow border border-gray-200 dark:border-gray-700"
+      onClick={() => (onOpen ? onOpen(item) : onAction?.(item.url))}
     >
       <motion.button
         onClick={handleToggleFavorite}
-        className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors z-10 shadow-sm"
         aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -89,7 +88,7 @@ export default function ContentCard({ item, onAction }: ContentCardProps) {
         >
           <Icon
             name="heart"
-            size="md"
+            size="sm"
             className={`transition-colors ${
               isFavorite 
                 ? 'text-red-500 fill-current' 
@@ -99,42 +98,39 @@ export default function ContentCard({ item, onAction }: ContentCardProps) {
           />
         </motion.div>
       </motion.button>
-      <div className="flex space-x-4">
-        <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0 overflow-hidden">
-          {item.imageUrl && !imageError ? (
-            <Image
-              src={item.imageUrl}
-              alt={item.title}
-              width={64}
-              height={64}
-              className="w-full h-full object-cover"
-              onError={() => setImageError(true)}
-              unoptimized={item.imageUrl.startsWith('http')}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-500">
-              {getIcon()}
-            </div>
-          )}
-        </div>
-        <div className="flex-1">
-          <h4 className="font-medium text-gray-900 dark:text-white mb-1">
-            {item.title}
-          </h4>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
-            {item.description}
-          </p>
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500 dark:text-gray-500">
-              {getMetadata()}
-            </span>
-            <button
-              onClick={() => onAction(item.url)}
-              className="text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline"
-            >
-              {getActionText()}
-            </button>
+      
+      {/* Image Section */}
+      <div className="w-full h-40 bg-gray-100 dark:bg-gray-800 overflow-hidden flex-shrink-0">
+        {item.imageUrl && !imageError ? (
+          <Image
+            src={item.imageUrl}
+            alt={item.title}
+            width={400}
+            height={192}
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            onError={() => setImageError(true)}
+            unoptimized={item.imageUrl.startsWith('http')}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-500 text-4xl">
+            {getContentIcon()}
           </div>
+        )}
+      </div>
+      
+      {/* Content Section */}
+      <div className="p-4 flex flex-col flex-1 justify-between bg-white dark:bg-gray-900">
+        <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight line-clamp-3 mb-3">
+          {item.title}
+        </h4>
+        
+        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mt-auto">
+          <span className="font-medium">
+            {formatMetadata()}
+          </span>
+          <span className="text-blue-600 dark:text-blue-400 font-semibold">
+            {getActionButtonText()}
+          </span>
         </div>
       </div>
     </motion.div>

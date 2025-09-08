@@ -72,7 +72,8 @@ export default function DraggableContentSection({
                 item={item}
                 onAction={onItemAction}
                 index={index}
-                onReorder={handleReorder}
+                section={typeof type === 'string' ? String(type) : 'all'}
+                onReorder={(dragIndex, hoverIndex) => handleReorder(dragIndex, hoverIndex)}
               />
             </motion.div>
           ))}

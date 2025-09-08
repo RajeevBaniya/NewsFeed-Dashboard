@@ -41,8 +41,8 @@ export default function ContentSectionWithToggle({
   return (
     <div className={`space-y-4 border-2 rounded-lg p-4 ${
       viewMode === 'draggable' 
-        ? 'border-solid border-green-500 dark:border-green-300 bg-green-50/30 dark:bg-green-900/20' 
-        : 'border-dashed border-blue-400 dark:border-blue-800 bg-blue-50/30 dark:bg-blue-900/20'
+        ? 'border-solid border-green-500 dark:border-green-300' 
+        : 'border-dashed border-gray-200 dark:border-gray-500'
     }`}>
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
@@ -82,7 +82,7 @@ export default function ContentSectionWithToggle({
           section={sectionType}
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {displayItems.map((item, index) => (
             <ContentCard
               key={`${title}-${item.id}-${index}`}

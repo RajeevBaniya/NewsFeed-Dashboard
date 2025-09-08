@@ -9,6 +9,11 @@ interface DragDropContextType {
   handleDrop: (targetIndex: number, targetSection: string, onReorder: (dragIndex: number, hoverIndex: number, dragSection: string, targetSection: string) => void) => void;
 }
 
+/**
+ * DragDropContext provides global state management for drag and drop operations
+ * Tracks the currently dragged item, its index, and section for cross-component communication
+ */
+
 const DragDropContext = createContext<DragDropContextType | undefined>(undefined);
 
 export function DragDropProvider({ children }: { children: React.ReactNode }) {

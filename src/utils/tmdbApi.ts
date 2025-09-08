@@ -1,16 +1,17 @@
 import { Movie, TmdbApiResponse, TmdbMovie } from './types';
+import { generateMovieId } from './idGenerator';
 
 const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-export const fetchPopularMovies = async (): Promise<Movie[]> => {
+export const fetchPopularMovies = async (page: number = 1): Promise<Movie[]> => {
   if (!TMDB_API_KEY) {
     throw new Error('TMDB API key not found');
   }
 
   try {
     const response = await fetch(
-      `${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`
+      `${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
     );
 
     if (!response.ok) {
@@ -20,7 +21,7 @@ export const fetchPopularMovies = async (): Promise<Movie[]> => {
     const data: TmdbApiResponse = await response.json();
     
     return data.results.map((movie: TmdbMovie) => ({
-      id: `movie-${movie.id}`,
+      id: generateMovieId(movie.id),
       title: movie.title || 'No title available',
       description: movie.overview || 'No description available',
       imageUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : undefined,
@@ -53,7 +54,7 @@ export const searchMovies = async (query: string): Promise<Movie[]> => {
     const data: TmdbApiResponse = await response.json();
     
     return data.results.map((movie: TmdbMovie) => ({
-      id: `search-movie-${movie.id}`,
+      id: generateMovieId(movie.id),
       title: movie.title || 'No title available',
       description: movie.overview || 'No description available',
       imageUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : undefined,

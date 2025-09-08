@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/store/hooks';
-import ContentCard from './ContentCard';
+import ContentCard from '../content/ContentCard';
 
 export default function FavoritesSidebar() {
   const favorites = useAppSelector((state) => state.favorites.items);

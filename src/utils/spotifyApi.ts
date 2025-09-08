@@ -1,4 +1,5 @@
 import { Track, SpotifyNewReleasesResponse, SpotifyAlbumTracksResponse, SpotifyApiResponse, SpotifyTrack } from './types';
+import { generateMusicId } from './idGenerator';
 
 const SPOTIFY_CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
 const SPOTIFY_CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
@@ -59,7 +60,7 @@ export const fetchFeaturedPlaylists = async (): Promise<Track[]> => {
       if (tracksResponse.ok) {
         const tracksData: SpotifyAlbumTracksResponse = await tracksResponse.json();
         return tracksData.items.map((track, index: number) => ({
-          id: `track-${index}-${Date.now()}`,
+          id: generateMusicId(track.id, track.name, track.artists?.[0]?.name),
           title: track.name || 'Unknown Track',
           description: `From ${data.albums.items[0].name || 'Unknown Album'}`,
           imageUrl: data.albums.items[0].images?.[0]?.url,
@@ -101,7 +102,7 @@ export const searchTracks = async (query: string): Promise<Track[]> => {
     const data: SpotifyApiResponse = await response.json();
     
     return data.tracks.items.map((track: SpotifyTrack, index: number) => ({
-      id: `search-track-${index}-${Date.now()}`,
+      id: generateMusicId(track.id, track.name, track.artists?.[0]?.name),
       title: track.name || 'Unknown Track',
       description: `From ${track.album?.name || 'Unknown Album'}`,
       imageUrl: track.album?.images?.[0]?.url,

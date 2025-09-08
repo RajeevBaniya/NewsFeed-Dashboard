@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, PersistMigrate } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from '@reduxjs/toolkit';
 
@@ -12,7 +12,31 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['preferences', 'favorites', 'feed'],
-  version: 3, // Increment version to clear old cache
+  version: 6, // Increment version to clear old cache and ensure trending state is properly initialized
+  migrate: ((state: unknown) => {
+    // Guard: state may be undefined/null/primitive during hydration
+    if (!state || typeof state !== 'object') {
+      return Promise.resolve(state);
+    }
+
+    // Ensure root slice exists
+    const root = state as { feed?: { trending?: unknown } };
+    if (!root.feed) {
+      root.feed = {} as { trending?: unknown };
+    }
+
+    // Ensure trending sub-slice exists
+    if (!root.feed.trending) {
+      (root.feed as { trending: unknown }).trending = {
+        items: [],
+        loading: false,
+        error: null,
+        lastUpdated: null,
+      };
+    }
+
+    return Promise.resolve(state);
+  }) as PersistMigrate,
 };
 
 const rootReducer = combineReducers({

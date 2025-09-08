@@ -16,8 +16,7 @@ const sizeClasses = {
   xl: 'w-8 h-8',
 };
 
-// Inline SVG paths for commonly used icons
-// Using inline SVG allows proper color inheritance with Tailwind classes
+// Inline SVG paths for better color inheritance in dark mode
 const iconPaths: Record<string, string> = {
   sun: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>',
   moon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>',
@@ -29,11 +28,15 @@ const iconPaths: Record<string, string> = {
   filter: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>',
   grid: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>',
   list: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>',
+  close: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>',
+  clear: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>',
+  'drag-handle': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>',
+  history: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>',
 };
 
 /**
- * Icon component with inline SVG support for better color control
- * Falls back to external SVG files for icons not in the inline list
+ * Icon component with inline SVG support for proper dark mode color inheritance
+ * Uses inline SVGs for better color control and dark mode compatibility
  */
 export default function Icon({ 
   name, 
@@ -46,7 +49,7 @@ export default function Icon({
   const fillClass = fill === 'current' ? 'fill-current' : 'fill-none';
   const strokeClass = stroke === 'current' ? 'stroke-current' : 'stroke-none';
   
-  // Use inline SVG for better color inheritance
+  // Use inline SVG for proper color inheritance in dark mode
   if (iconPaths[name]) {
     return (
       <svg
@@ -61,8 +64,9 @@ export default function Icon({
     );
   }
   
-  // Fallback to external SVG files
+  // Fallback to external SVG files for icons not in the inline list
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={`/icons/${name}.svg`}
       alt={`${name} icon`}

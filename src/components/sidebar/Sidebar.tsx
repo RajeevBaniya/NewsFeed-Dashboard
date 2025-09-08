@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
 import Icon from '../ui/Icon';
 
 interface SidebarProps {
@@ -10,9 +10,14 @@ interface SidebarProps {
   onSectionChange: (section: string) => void;
 }
 
+/**
+ * Sidebar component for navigation between different content sections
+ * Includes mobile overlay and responsive design
+ */
 export default function Sidebar({ isOpen, onToggle, activeSection, onSectionChange }: SidebarProps) {
+  // Navigation menu items
   const menuItems = [
-    { id: 'feed', label: 'Personalized Feed', icon: '📰' },
+    { id: 'feed', label: 'Feed', icon: '📰' },
     { id: 'trending', label: 'Trending', icon: '🔥' },
     { id: 'favorites', label: 'Favorites', icon: '❤️' },
   ];
@@ -29,7 +34,7 @@ export default function Sidebar({ isOpen, onToggle, activeSection, onSectionChan
       
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 
+        fixed top-0 left-0 h-full w-56 bg-white dark:bg-gray-900 
         border-r border-gray-200 dark:border-gray-700 z-50
         transform transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -50,12 +55,10 @@ export default function Sidebar({ isOpen, onToggle, activeSection, onSectionChan
           
           <nav className="space-y-2">
             {menuItems.map((item) => (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => {
-                  onSectionChange(item.id);
-                  onToggle();
-                }}
+                href={`/${item.id}`}
+                onClick={onToggle}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg 
                          text-left transition-colors duration-200 ${
                   activeSection === item.id
@@ -67,7 +70,7 @@ export default function Sidebar({ isOpen, onToggle, activeSection, onSectionChan
                 <span className="font-medium">
                   {item.label}
                 </span>
-              </button>
+              </Link>
             ))}
           </nav>
         </div>

@@ -3,7 +3,8 @@
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { toggleDarkMode } from '@/store/slices/preferencesSlice';
-import { clearCache } from '@/store/slices/feedSlice';
+
+// Components
 import SearchBar from '../search/SearchBar';
 import Icon from '../ui/Icon';
 
@@ -11,10 +12,14 @@ interface HeaderProps {
   onMenuToggle: () => void;
 }
 
+/**
+ * Header component with search, theme toggle, notifications, and cache management
+ */
 export default function Header({ onMenuToggle }: HeaderProps) {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.preferences.darkMode);
 
+  // Apply dark mode class to document root
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -23,14 +28,9 @@ export default function Header({ onMenuToggle }: HeaderProps) {
     }
   }, [darkMode]);
 
+  // Toggle between light and dark themes
   const handleDarkModeToggle = () => {
     dispatch(toggleDarkMode());
-  };
-
-  const handleClearCache = () => {
-    dispatch(clearCache());
-    // Reload the page to fetch fresh data
-    window.location.reload();
   };
 
   return (
@@ -76,15 +76,6 @@ export default function Header({ onMenuToggle }: HeaderProps) {
                 className="text-gray-600 dark:text-white" 
               />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-
-            {/* Clear Cache Button - Temporary */}
-            <button
-              onClick={handleClearCache}
-              className="px-3 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-              title="Clear cache and reload"
-            >
-              Clear Cache
             </button>
 
             {/* User profile */}

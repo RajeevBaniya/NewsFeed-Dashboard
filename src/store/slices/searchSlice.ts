@@ -36,7 +36,7 @@ export const performSearch = createAsyncThunk(
     }
 
     const searchTerm = query.toLowerCase();
-    let filteredItems = items.filter((item) => {
+    const filteredItems = items.filter((item) => {
       const matchesQuery = 
         item.title.toLowerCase().includes(searchTerm) ||
         item.description.toLowerCase().includes(searchTerm) ||
