@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [suggestSignup, setSuggestSignup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
 
   useEffect(() => {
     if (!loading && user) {
@@ -53,10 +54,43 @@ export default function LoginPage() {
   if (loading) return <main className="p-6">Loading…</main>;
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 overflow-hidden">
-      {/* Ambient blobs */}
+    <main
+      className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 overflow-hidden"
+      onMouseMove={(e) => {
+        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        setMousePos({ x, y });
+      }}
+    >
+      {/* Ambient glows */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 opacity-30 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-8rem] right-[-8rem] h-[28rem] w-[28rem] rounded-full bg-gradient-to-tr from-fuchsia-500 to-amber-400 opacity-20 blur-3xl" />
+      {/* Additional corner glows to fill empty sides */}
+      <div className="pointer-events-none absolute -bottom-24 left-[-6rem] h-[22rem] w-[22rem] rounded-full bg-gradient-to-tr from-indigo-500/40 to-cyan-400/30 opacity-20 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 right-[-6rem] h-[20rem] w-[20rem] rounded-full bg-gradient-to-br from-rose-500/40 to-violet-500/30 opacity-20 blur-3xl" />
+
+      {/* Aurora sweep for subtle motion-like color without clutter */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-30 mix-blend-screen"
+        style={{
+          backgroundImage:
+            "radial-gradient(60rem 25rem at 85% 70%, rgba(99,102,241,0.35), transparent 60%), radial-gradient(45rem 18rem at 15% 35%, rgba(56,189,248,0.28), transparent 60%), radial-gradient(35rem 16rem at 70% 20%, rgba(244,63,94,0.22), transparent 60%)",
+        }}
+      />
+
+      {/* Soft vignette */}
+      <div className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(70%_60%_at_50%_45%,black,transparent)] bg-black/40" />
+
+      {/* Cursor spotlight for depth */}
+      <div
+        className="pointer-events-none absolute inset-0 transition-[background] duration-200"
+        style={{
+          background: `radial-gradient(300px 300px at ${mousePos.x}% ${mousePos.y}%, rgba(59,130,246,0.12), transparent 60%)`,
+        }}
+      />
+
+      {/* Clean background: no chips/cards, just color ambience */}
 
       {/* Dark mode enforced; no toggle on auth pages */}
 
@@ -78,7 +112,7 @@ export default function LoginPage() {
                 </div>
                 <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center bg-white dark:bg-gray-900">
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">Drag</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">and Save</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">and Customize</p>
                 </div>
                 <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center bg-white dark:bg-gray-900">
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">Fast</p>
