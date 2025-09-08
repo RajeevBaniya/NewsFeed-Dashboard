@@ -23,7 +23,7 @@ You can replace with real keys when available.
 ### Run Dev Server
 ```bash
 npm run dev
-# open the printed URL, e.g. http://localhost:3000/feed
+
 ```
 
 ## Scripts
@@ -52,6 +52,14 @@ npm run cy:open
 # run specs in src/tests/e2e
 ```
 
+
+## Authentication
+- Firebase Email/Password auth
+- Required env :
+  - `NEXT_PUBLIC_FIREBASE_API_KEY`
+  - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+  - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+  - `NEXT_PUBLIC_FIREBASE_APP_ID`
 
 ## Features
 - content feed (News, Movies, Music, Social)
