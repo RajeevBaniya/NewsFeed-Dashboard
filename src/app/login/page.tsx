@@ -92,7 +92,31 @@ export default function LoginPage() {
 
       {/* Clean background: no chips/cards, just color ambience */}
 
-      {/* Dark mode enforced; no toggle on auth pages */}
+      {/* Prominent top feature strip (clearly visible, not beside cards) */}
+      <div className="absolute top-6 inset-x-0 z-10 flex justify-center px-4">
+        <div className="pointer-events-none inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] sm:text-sm text-white/90">
+          <span className="inline-flex items-center gap-2">
+            <svg className="h-4 w-4 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 10h16M4 14h10"/><circle cx="6" cy="12" r="2"/></svg>
+            Gather 4+ sources
+          </span>
+          <span className="opacity-60">•</span>
+          <span className="inline-flex items-center gap-2">
+            <svg className="h-4 w-4 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            Drag to reorder
+          </span>
+          <span className="opacity-60">•</span>
+          <span className="inline-flex items-center gap-2">
+            <svg className="h-4 w-4 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+            Fast search
+          </span>
+          <span className="opacity-60">•</span>
+          <span className="inline-flex items-center gap-2">
+            <svg className="h-4 w-4 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            Save favorites
+          </span>
+        </div>
+      </div>
+
 
       <div className="relative mx-auto max-w-6xl px-6 py-12 lg:py-20 min-h-screen grid content-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -101,7 +125,7 @@ export default function LoginPage() {
             <div className="rounded-2xl p-10 bg-white/80 dark:bg-gray-800/70 backdrop-blur border border-gray-200/60 dark:border-gray-700/60 shadow-sm">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Welcome to PersonalFeed</h1>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Your personalized hub for tech news, movies, music and social updates. Sign in to curate,
+                Your personalized hub for tech news, movies, music and social updates. Sign in to gather,
                 reorder and save the content that matters to you.
               </p>
 

@@ -1,11 +1,18 @@
 # PersonalFeed
 Modern, personalized content dashboard built with Next.js 15, React 19, TypeScript, Redux Toolkit and Tailwind. Features unified content feed, search/filtering, favorites and draggable ordering with persistence. Includes unit, integration and E2E tests.
 
-## Getting Started
+## Tech Stack
 
-### Prerequisites
-- Node.js 18+ (recommended 20+)
-- npm 9+
+- Next.js 15 
+- React 19
+- TypeScript
+- Redux Toolkit + Redux Persist
+- Tailwind CSS
+- Firebase Email/Password
+- Data sources: News API, TMDB, Spotify, social (local JSON)
+- Testing: Jest + React Testing Library, Cypress E2E
+
+## Getting Started
 
 ### Install
 ```bash
@@ -15,8 +22,9 @@ npm install
 ### Environment Variables
 Create `.env.local` in the project root. For local development you can start with dummy values:
 ```bash
-NEWS_API_KEY=dummy
-NEXT_PUBLIC_NEWS_API_KEY=dummy
+NEXT_PUBLIC_TMDB_API_KEY=.....
+NEXT_PUBLIC_NEWS_API_KEY=.....
+NEXT_PUBLIC_SPOTIFY_CLIENT_ID=....
 ```
 You can replace with real keys when available.
 
