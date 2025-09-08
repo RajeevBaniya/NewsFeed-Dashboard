@@ -29,12 +29,12 @@ export default function FilterBar() {
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-6">
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center space-x-2">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Filter:
           </span>
-          <div className="flex space-x-1">
+          <div className="flex flex-wrap gap-2">
             {contentTypes.map((type) => (
               <button
                 key={type.value || 'all'}
@@ -51,7 +51,7 @@ export default function FilterBar() {
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Sort:
           </span>
