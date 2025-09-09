@@ -43,7 +43,7 @@ export default function Dashboard() {
       />
       
       {/* Main content area */}
-      <div className="lg:ml-56 flex flex-col min-h-screen overflow-visible">
+      <div className="lg:ml-56 xl:ml-64 flex flex-col min-h-screen overflow-visible">
         {/* Header */}
         <Header onMenuToggle={toggleSidebar} />
         

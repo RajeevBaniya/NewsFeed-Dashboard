@@ -25,7 +25,7 @@ export default function SaveButton({ className = '' }: SaveButtonProps) {
       onClick={handleSave}
       disabled={!hasUnsavedChanges}
       className={`
-        px-4 py-2 rounded-lg font-medium transition-all duration-200
+        px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-medium transition-all duration-200
         ${hasUnsavedChanges
           ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg cursor-pointer'
           : 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
@@ -38,9 +38,10 @@ export default function SaveButton({ className = '' }: SaveButtonProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         <Icon name="save" size="sm" />
-        {hasUnsavedChanges ? 'Save Changes' : 'No Changes'}
+        <span className="hidden xs:inline">{hasUnsavedChanges ? 'Save Changes' : 'No Changes'}</span>
+        <span className="xs:hidden">{hasUnsavedChanges ? 'Save' : 'Saved'}</span>
       </div>
     </motion.button>
   );

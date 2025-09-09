@@ -116,9 +116,9 @@ export default function MainContent({ activeSection }: MainContentProps) {
 
   if (loading && items.length === 0) {
     return (
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 p-3 sm:p-4 lg:p-6 xl:p-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {Array.from({ length: 12 }).map((_, index) => (
               <ContentSectionSkeleton key={index} />
             ))}
@@ -130,13 +130,13 @@ export default function MainContent({ activeSection }: MainContentProps) {
 
   if (error) {
     return (
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 p-3 sm:p-4 lg:p-6 xl:p-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center py-8">
-            <p className="text-red-600 dark:text-red-400 mb-4">Error: {error}</p>
+          <div className="text-center py-6 sm:py-8">
+            <p className="text-red-600 dark:text-red-400 mb-4 text-sm sm:text-base">Error: {error}</p>
             <button 
               onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base"
             >
               Retry
             </button>
@@ -164,7 +164,7 @@ export default function MainContent({ activeSection }: MainContentProps) {
 
   if (isSearchMode) {
     return (
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 p-3 sm:p-4 lg:p-6 xl:p-8">
         <div className="max-w-6xl mx-auto">
           {isSearchMode && <SearchHeader query={query} isSearching={isSearching} />}
 
@@ -182,14 +182,14 @@ export default function MainContent({ activeSection }: MainContentProps) {
 
   return (
     <DragDropProvider>
-      <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-visible">
+      <main className="flex-1 p-3 sm:p-4 lg:p-6 xl:p-8 overflow-visible">
         <div className="max-w-6xl mx-auto overflow-visible">
         {activeSection === 'feed' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <FeedHeader title="Content Feed" showSave={viewMode === 'draggable'} />
 
             {/* Unified Content Feed */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-500 p-6 overflow-visible">
+            <div className="bg-white dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-500 p-3 sm:p-4 lg:p-6 overflow-visible">
               
               {displayItems.length > 0 ? (
                 viewMode === 'draggable' ? (

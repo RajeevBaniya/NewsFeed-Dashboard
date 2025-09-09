@@ -75,10 +75,10 @@ export default function SearchBar() {
   };
 
   return (
-    <div ref={searchRef} className="relative w-full max-w-md">
+    <div ref={searchRef} className="relative w-full">
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Icon name="search" size="md" className="text-gray-400" />
+        <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
+          <Icon name="search" size="sm" className="text-gray-400 sm:w-4 sm:h-4" />
         </div>
         <input
           type="text"
@@ -87,23 +87,23 @@ export default function SearchBar() {
           onKeyDown={handleKeyDown}
           onFocus={() => setShowHistory(localQuery === '')}
           placeholder="Search content..."
-          className="block w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="block w-full pl-8 sm:pl-10 pr-8 sm:pr-10 py-1.5 sm:py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
         {localQuery && (
           <button
             onClick={handleClearSearch}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+            className="absolute inset-y-0 right-0 pr-2 sm:pr-3 flex items-center"
           >
             <Icon 
               name="clear" 
-              size="md" 
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" 
+              size="sm" 
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 sm:w-4 sm:h-4" 
             />
           </button>
         )}
         {isSearching && (
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+          <div className="absolute inset-y-0 right-0 pr-2 sm:pr-3 flex items-center">
+            <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 border-b-2 border-blue-500"></div>
           </div>
         )}
       </div>
