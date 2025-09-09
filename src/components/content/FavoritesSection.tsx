@@ -37,7 +37,7 @@ export default function FavoritesSection({ favorites, onItemAction }: FavoritesS
         </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {favorites.filter(item => item && item.id).map((item, index) => (
           <ContentCard key={`favorite-${item.id}-${index}`} item={item} onAction={onItemAction} />
         ))}

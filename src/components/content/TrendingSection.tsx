@@ -22,7 +22,7 @@ export default function TrendingSection({ items, loading, error, onOpen, onRetry
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">🔥 Trending Content</h2>
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {Array.from({ length: 8 }).map((_, index) => (
             <div key={index} className="bg-white dark:bg-gray-800 rounded-lg p-4 animate-pulse">
               <div className="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
@@ -94,7 +94,7 @@ function SectionGrid({ title, items, onOpen }: { title: string; items: ContentIt
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">{title}</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
         {items.map((item, index) => (
           <ContentCard key={`${item.type}-${item.id}-${index}`} item={item} onOpen={onOpen} />
         ))}

@@ -34,7 +34,7 @@ export default function DraggableGrid({ items, onReorder, onItemAction, section 
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       <AnimatePresence>
         {items.filter(item => item && item.id).map((item, index) => (
           <motion.div

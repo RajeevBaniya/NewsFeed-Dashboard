@@ -17,9 +17,9 @@ export default function FeedHeader({ title, showSave }: FeedHeaderProps) {
       <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
         {title}
       </h2>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-        {showSave && <SaveButton />}
+      <div className="flex flex-row items-center justify-end gap-2 sm:gap-4">
         <ViewToggle />
+        {showSave && <SaveButton />}
       </div>
     </div>
   );
