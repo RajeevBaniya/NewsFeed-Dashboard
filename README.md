@@ -1,5 +1,7 @@
 # PersonalFeed
 Live - https://personalfeed.vercel.app/
+
+
 Modern, personalized content dashboard built with Next.js 15, React 19, TypeScript, Redux Toolkit and Tailwind. Features unified content feed, search/filtering, favorites and draggable ordering with persistence. Includes unit, integration and E2E tests.
 
 ## Tech Stack
