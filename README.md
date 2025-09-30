@@ -8,7 +8,6 @@
 - Redux Toolkit + Redux Persist
 - Tailwind CSS
 - Firebase Email/Password
-- Data sources: News API, TMDB, Spotify, social (local JSON)
 - Testing: Jest + React Testing Library, Cypress E2E
 
 ## Getting Started
