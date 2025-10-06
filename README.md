@@ -17,26 +17,12 @@
 npm install
 ```
 
-### Environment Variables
-Create `.env.local` in the project root. For local development you can start with dummy values:
-```bash
-NEXT_PUBLIC_TMDB_API_KEY=.....
-NEXT_PUBLIC_NEWS_API_KEY=.....
-NEXT_PUBLIC_SPOTIFY_CLIENT_ID=....
-```
-You can replace with real keys when available.
-
 ### Run Dev Server
 ```bash
 npm run dev
 
 ```
 
-## Scripts
-- `npm run dev` – Start Next.js dev server
-- `npm test` – Jest unit + integration tests
-- `npm run cy:open` – Open Cypress GUI
-- `npm run e2e` – Start server and run Cypress E2E headless (Windows-friendly)
 
 ## Testing Guide
 
@@ -67,20 +53,7 @@ npm run cy:open
   - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
   - `NEXT_PUBLIC_FIREBASE_APP_ID`
 
-## Features
-- content feed (News, Movies, Music, Social)
-- Search with debounce, filters, sort
-- Favorites with persistence
-- Drag-and-drop ordering with Save/Discard
-- Trending section and infinite scroll
-- Dark mode, responsive layout
 
-## User Flow
-- Landing redirects to `Feed` where initial content is loaded.
-- Use the search bar to filter across all loaded items; refine by type/sort.
-- Toggle "View" to switch between normal and draggable modes; drag cards to reorder and click "Save Changes".
-- Click the heart on a card to add/remove favorites; view them in `Favorites`.
-- Open `Trending` to see curated items aggregated from multiple sources.
 
 ## Repository Structure
 ```
@@ -93,16 +66,4 @@ src/
   tests/         # Jest + RTL tests and Cypress E2E specs
 ```
 
-## Architecture
-
-- Routes: `/feed`, `/trending`, `/favorites` (Next.js App Router)
-- Shell: `components/layout/Dashboard.tsx`
-- Content orchestrator: `components/content/MainContent.tsx`
-- Feature components:
-  - Feed: `FeedHeader`, `UnifiedFeedGrid`, `DraggableFeed`, `InfiniteLoader`, `ContentCard`, `ContentModal`
-  - Search: `SearchHeader`, `SearchSections`, `SearchEmpty`
-  - Favorites: `FavoritesSection`
-  - Trending: `TrendingSection`
-- Hooks: `useInitialContentLoad`, `useFeedPaging`, `useTrendingOnView`, `useModalState`, `useInfiniteScroll`
-- State: Redux Toolkit + Persist (`preferences`, `feed`, `favorites`, `search`)
 
